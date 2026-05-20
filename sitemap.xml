@@ -3,26 +3,20 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://zpatkyvpatky.xyz/</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://zpatkyvpatky.xyz/ravenreloaded</loc>
-    <lastmod>2025-01-27</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://zpatkyvpatky.xyz/ravenreloaded.png</image:loc>
-      <image:title>Raven Reloaded - Advanced Minecraft Cheat Client</image:title>
-      <image:caption>Advanced Minecraft cheat client with modern features and clean interface</image:caption>
+      <image:title>Raven Client - Advanced Minecraft Ghost Client</image:title>
+      <image:caption>Free Advanced Minecraft Ghost Client for 1.8.9 with modern features and Forge support.</image:caption>
     </image:image>
-  </url>
-  <url>
-    <loc>https://zpatkyvpatky.xyz/ravenreloaded.html</loc>
-    <lastmod>2025-01-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
   </url>
 </urlset>
 

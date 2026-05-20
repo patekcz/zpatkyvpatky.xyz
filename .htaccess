@@ -3,9 +3,12 @@ RewriteEngine On
 
 # Přesměrování z /ravenreloaded na /ravenreloaded.html
 RewriteRule ^ravenreloaded$ ravenreloaded.html [L]
+RewriteRule ^rvnr$ ravenreloaded.html [L]
+RewriteRule ^ravenR$ ravenreloaded.html [L]
+RewriteRule ^ravenr$ ravenreloaded.html [L]
 
-# Přesměrování z /ravenreloaded/ na /ravenreloaded.html (bez trailing slash)
-RewriteRule ^ravenreloaded/$ ravenreloaded.html [L,R=301]
+# Přesměrování s lomítkem (301)
+RewriteRule ^(ravenreloaded|rvnr|ravenR|ravenr)/$ $1 [L,R=301]
 
 # Komprese pro lepší výkon
 <IfModule mod_deflate.c>
