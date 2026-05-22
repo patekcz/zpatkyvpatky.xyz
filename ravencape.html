@@ -268,7 +268,7 @@
             border: 4px solid #000;
             box-shadow: inset -5px -5px 0px #555, inset 5px 5px 0px #fff;
             display: grid;
-            grid-template-columns: 360px 1fr;
+            grid-template-columns: 380px 1fr;
             padding: 16px;
             gap: 16px;
             z-index: 1;
@@ -353,6 +353,51 @@
 
         input[type="file"] {
             display: none;
+        }
+
+        /* --- OVLÁDÁNÍ POZICE OBRÁZKU --- */
+        .image-alignment-pane {
+            background: #313131;
+            border: 3px solid #000;
+            box-shadow: inset 3px 3px 0px #1a1a1a;
+            padding: 12px 10px;
+            margin-top: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .alignment-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .alignment-label {
+            font-size: 9px;
+            color: #dfdfdf;
+            text-shadow: 2px 2px 0px #000;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mc-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #555;
+            border: 2px solid #000;
+            outline: none;
+        }
+
+        .mc-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #cbd5e1;
+            border: 2px solid #000;
+            box-shadow: inset -2px -2px 0px #475569, inset 2px 2px 0px #fff;
+            cursor: pointer;
         }
 
         /* Knihovna obrázků */
@@ -569,6 +614,22 @@
                     </div>
                 </div>
 
+                <!-- SEKCE PRO POSITION / ALIGNMENT NASTAVENÍ -->
+                <div class="image-alignment-pane" id="alignment-pane">
+                    <div class="alignment-row">
+                        <label class="alignment-label">SCALE (MĚŘÍTKO): <span id="val-scale">100%</span></label>
+                        <input type="range" class="mc-range" id="range-scale" min="10" max="400" value="100" oninput="handleAlignmentChange()">
+                    </div>
+                    <div class="alignment-row">
+                        <label class="alignment-label">OFFSET X (POSUN X): <span id="val-offset-x">0px</span></label>
+                        <input type="range" class="mc-range" id="range-offset-x" min="-500" max="500" value="0" oninput="handleAlignmentChange()">
+                    </div>
+                    <div class="alignment-row">
+                        <label class="alignment-label">OFFSET Y (POSUN Y): <span id="val-offset-y">0px</span></label>
+                        <input type="range" class="mc-range" id="range-offset-y" min="-500" max="500" value="0" oninput="handleAlignmentChange()">
+                    </div>
+                </div>
+
                 <button class="mc-btn" id="btn-remove-image" onclick="removeCurrentImage()" style="margin-top: 8px; width: 100%; background-color: #aa5555; box-shadow: inset -3px -3px 0px #773333, inset 3px 3px 0px #cc7777; display: none;">REMOVE IMAGE</button>
 
                 <div class="recent-images-pane" id="recent-pane">
@@ -604,10 +665,10 @@
     
     let currentTab = 'front';
     const state = {
-        front: { mode: 'image', color: '#1a1a1a', image: null, filename: 'CLICK TO UPLOAD IMAGE...' },
-        back:  { mode: 'image', color: '#7d5fff', image: null, filename: 'CLICK TO UPLOAD IMAGE...' },
-        top:   { mode: 'image', color: '#5a5a5a', image: null, filename: 'CLICK TO UPLOAD IMAGE...' },
-        sides: { mode: 'image', color: '#333333', image: null, filename: 'CLICK TO UPLOAD IMAGE...' }
+        front: { mode: 'image', color: '#1a1a1a', image: null, filename: 'CLICK TO UPLOAD IMAGE...', scale: 100, offsetX: 0, offsetY: 0 },
+        back:  { mode: 'image', color: '#7d5fff', image: null, filename: 'CLICK TO UPLOAD IMAGE...', scale: 100, offsetX: 0, offsetY: 0 },
+        top:   { mode: 'image', color: '#5a5a5a', image: null, filename: 'CLICK TO UPLOAD IMAGE...', scale: 100, offsetX: 0, offsetY: 0 },
+        sides: { mode: 'image', color: '#333333', image: null, filename: 'CLICK TO UPLOAD IMAGE...', scale: 100, offsetX: 0, offsetY: 0 }
     };
 
     const uploadedImagesHistory = [];
@@ -638,6 +699,21 @@
         
         document.getElementById('recent-pane').style.display = (currentData.mode === 'image' && uploadedImagesHistory.length > 0) ? 'block' : 'none';
 
+        // Zobrazení / skrytí posuvníků pro zarovnání obrázku
+        const alignmentPane = document.getElementById('alignment-pane');
+        if (currentData.mode === 'image' && currentData.image) {
+            alignmentPane.style.display = 'flex';
+            document.getElementById('range-scale').value = currentData.scale;
+            document.getElementById('range-offset-x').value = currentData.offsetX;
+            document.getElementById('range-offset-y').value = currentData.offsetY;
+            
+            document.getElementById('val-scale').textContent = currentData.scale + '%';
+            document.getElementById('val-offset-x').textContent = currentData.offsetX + 'px';
+            document.getElementById('val-offset-y').textContent = currentData.offsetY + 'px';
+        } else {
+            alignmentPane.style.display = 'none';
+        }
+
         const slotZone = document.getElementById('upload-slot-zone');
         slotZone.style.cursor = currentData.mode === 'color' ? 'default' : 'pointer';
 
@@ -653,9 +729,27 @@
         updateRecentGalleryUI();
     }
 
+    // Reakce na změnu posuvníků (Scale, Offset X, Offset Y)
+    function handleAlignmentChange() {
+        const currentData = state[currentTab];
+        
+        currentData.scale = parseInt(document.getElementById('range-scale').value);
+        currentData.offsetX = parseInt(document.getElementById('range-offset-x').value);
+        currentData.offsetY = parseInt(document.getElementById('range-offset-y').value);
+        
+        document.getElementById('val-scale').textContent = currentData.scale + '%';
+        document.getElementById('val-offset-x').textContent = currentData.offsetX + 'px';
+        document.getElementById('val-offset-y').textContent = currentData.offsetY + 'px';
+        
+        render(true);
+    }
+
     function removeCurrentImage() {
         state[currentTab].image = null;
         state[currentTab].filename = 'CLICK TO UPLOAD IMAGE...';
+        state[currentTab].scale = 100;
+        state[currentTab].offsetX = 0;
+        state[currentTab].offsetY = 0;
         syncUI();
         render(true);
     }
@@ -678,6 +772,9 @@
                 img.onload = () => {
                     state[currentTab].image = img;
                     state[currentTab].filename = upperName;
+                    state[currentTab].scale = 100;
+                    state[currentTab].offsetX = 0;
+                    state[currentTab].offsetY = 0;
                     
                     if (!uploadedImagesHistory.some(item => item.src === e.target.result)) {
                         uploadedImagesHistory.push({
@@ -702,6 +799,9 @@
         if (selected) {
             state[currentTab].image = selected.imgObj;
             state[currentTab].filename = selected.name;
+            state[currentTab].scale = 100;
+            state[currentTab].offsetX = 0;
+            state[currentTab].offsetY = 0;
             syncUI();
             render(true);
         }
@@ -755,16 +855,37 @@
                     ctx.fillRect(targetX, targetY, targetW, targetH);
                 } else if (data.mode === 'image' && data.image) {
                     const img = data.image;
+                    
+                    // Výpočet základní velikosti aby obrázek vyplnil slot (původní aspect-ratio logika)
                     const ia = img.width / img.height;
                     const ta = targetW / targetH;
-                    let sx, sy, sw, sh;
+                    let sw, sh;
                     
                     if (ia > ta) { 
-                        sh = img.height; sw = img.height * ta; sx = (img.width - sw) / 2; sy = 0; 
+                        sh = img.height; sw = img.height * ta; 
                     } else { 
-                        sw = img.width; sh = img.width / ta; sx = 0; sy = (img.height - sh) / 2; 
+                        sw = img.width; sh = img.width / ta; 
                     }
+                    
+                    // Aplikace vlastního měřítka (Scale) zadaného uživatelem
+                    const scaleFactor = data.scale / 100;
+                    sw = sw / scaleFactor;
+                    sh = sh / scaleFactor;
+
+                    // Výpočet středu a aplikace uživatelského posunu (Offset X a Y)
+                    // Hodnoty ořezu (sx, sy) na zdrojovém obrázku
+                    let sx = ((img.width - sw) / 2) - data.offsetX;
+                    let sy = ((img.height - sh) / 2) - data.offsetY;
+
+                    // Vykreslení ořezané části obrázku do cílového slotu na plátně
+                    ctx.save();
+                    // Vytvoříme masku kolem slotu aby obrázek nepřetékal ven
+                    ctx.beginPath();
+                    ctx.rect(targetX, targetY, targetW, targetH);
+                    ctx.clip();
+                    
                     ctx.drawImage(img, sx, sy, sw, sh, targetX, targetY, targetW, targetH);
+                    ctx.restore();
                 } else {
                     ctx.fillStyle = '#2e2e2e';
                     ctx.fillRect(targetX, targetY, targetW, targetH);
