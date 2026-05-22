@@ -3,12 +3,13 @@ RewriteEngine On
 
 # Přesměrování z /ravenreloaded na /ravenreloaded.html
 RewriteRule ^ravenreloaded$ ravenreloaded.html [L]
+RewriteRule ^ravencape$ ravencape.html [L]
 RewriteRule ^rvnr$ ravenreloaded.html [L]
 RewriteRule ^ravenR$ ravenreloaded.html [L]
 RewriteRule ^ravenr$ ravenreloaded.html [L]
 
 # Přesměrování s lomítkem (301)
-RewriteRule ^(ravenreloaded|rvnr|ravenR|ravenr)/$ $1 [L,R=301]
+RewriteRule ^(ravenreloaded|ravencape|rvnr|ravenR|ravenr)/$ $1 [L,R=301]
 
 # Komprese pro lepší výkon
 <IfModule mod_deflate.c>
@@ -29,6 +30,7 @@ RewriteRule ^(ravenreloaded|rvnr|ravenR|ravenr)/$ $1 [L,R=301]
     ExpiresByType text/css "access plus 1 year"
     ExpiresByType application/javascript "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
