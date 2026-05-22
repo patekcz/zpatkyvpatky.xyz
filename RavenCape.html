@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Raven Reloaded Cape Creator - Minecraft HD Cape Editor</title>
+    <meta name="title" content="Raven Reloaded Cape Creator - Minecraft HD Cape Editor">
+    <meta name="description" content="Vytvoř si vlastní Minecraft plášť v HD rozlišení. Online editor pro přední, zadní a boční stranu pláště s podporou barev i vlastních obrázků. Optimalizováno pro mobil i PC.">
+    <meta name="keywords" content="Minecraft, Cape Creator, Raven Reloaded, Minecraft pláště, HD Cape Editor, custom capes, keystrokes capes, Minecraft skin, online editor">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Raven Reloaded">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tvoje-domena.cz/"> <meta property="og:title" content="Raven Reloaded Cape Creator 🦅">
+    <meta property="og:description" content="Nástroj pro tvorbu vlastních Minecraft HD plášťů. Nahraj obrázek, zvol barvy a exportuj přímo do hry!">
+    <meta property="og:image" content="https://tvoje-domena.cz/og-preview.png"> <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Raven Reloaded">
+    <meta name="theme-color" content="#55aa55">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tvoje-domena.cz/">
+    <meta property="twitter:title" content="Raven Reloaded Cape Creator">
+    <meta property="twitter:description" content="Nástroj pro tvorbu vlastních Minecraft HD plášťů.">
+    <meta property="twitter:image" content="https://tvoje-domena.cz/og-preview.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --mc-bg: #c6c6c6;
+            --mc-dark-bg: #4a4a4a;
+            --mc-slot: #8b8b8b;
+            --mc-text-yellow: #ffff55;
+            --mc-text-green: #55ff55;
+            --mc-shadow: 2px 2px 0px #000;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', monospace;
+            image-rendering: pixelated;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #111111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* --- PANORAMA POZADÍ --- */
+        .bg-container {
+            position: fixed;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background-image: url('minecraft_bg.png');
+            background-size: cover;
+            background-position: center;
+            image-rendering: pixelated;
+            z-index: 1;
+            animation: panBackgroundNormal 30s infinite alternate ease-in-out;
+        }
+        
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%), rgba(16, 16, 20, 0.35);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        @keyframes panBackgroundNormal {
+            0% { transform: scale(1.22) translate(0, 0); }
+            50% { transform: scale(1.22) translate(-3.5%, -3.5%); }
+            100% { transform: scale(1.22) translate(0, 0); }
+        }
+
+        /* --- NAVIGACE HORNÍ LIŠTA --- */
+        .top-nav-left {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .top-nav-right {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .mc-text-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            color: #aaaaaa;
+            text-shadow: 2px 2px 0px #3f3f3f;
+            text-decoration: none;
+            transition: color 0.1s ease;
+        }
+        
+        .mc-text-btn:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* Hlavní nadpis pro SEO strukturu, skrytý vizuálně, pokud není v GUI žádaný */
+        .seo-heading {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Kompaktní kontejner */
+        .gui-wrapper {
+            width: 100%;
+            max-width: 960px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: auto;
+            z-index: 10;
+            padding: 40px 16px;
+        }
+
+        /* Taby */
+        .tabs-container {
+            display: flex;
+            gap: 4px;
+            padding-left: 8px;
+            margin-bottom: -4px;
+            z-index: 2;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            background-color: #8b8b8b;
+            border: 4px solid #000;
+            border-bottom: none;
+            box-shadow: inset 3px 3px 0px #dbdbdb, inset -3px 0px 0px #555;
+            padding: 10px 14px;
+            font-size: 11px;
+            color: #dfdfdf;
+            cursor: pointer;
+            text-shadow: var(--mc-shadow);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .tab:hover {
+            background-color: #9e9e9e;
+            color: #fff;
+            padding-top: 12px;
+            margin-top: -2px;
+        }
+
+        .tab.active {
+            background-color: var(--mc-bg);
+            color: var(--mc-text-yellow);
+            box-shadow: inset 3px 3px 0px #fff, inset -3px 0px 0px #555;
+            padding-top: 14px;
+            margin-top: -4px;
+            position: relative;
+        }
+
+        /* GUI Tělo */
+        .gui-body {
+            background-color: var(--mc-bg);
+            border: 4px solid #000;
+            box-shadow: inset -5px -5px 0px #555, inset 5px 5px 0px #fff;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            padding: 16px;
+            gap: 16px;
+            z-index: 1;
+        }
+
+        /* Control Panel */
+        .config-pane {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--mc-slot);
+            border: 4px solid #000;
+            box-shadow: inset -4px -4px 0px #555, inset 4px 4px 0px #dbdbdb;
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .pane-title {
+            font-size: 11px;
+            color: #fff;
+            text-shadow: var(--mc-shadow);
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
+        .mc-button-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .mc-btn {
+            flex: 1;
+            font-size: 11px;
+            color: #e0e0e0;
+            background-color: #707070;
+            border: 3px solid #000;
+            box-shadow: inset -3px -3px 0px #4a4a4a, inset 3px 3px 0px #afafaf;
+            padding: 12px 4px;
+            cursor: pointer;
+            text-shadow: var(--mc-shadow);
+            text-align: center;
+        }
+
+        .mc-btn.active {
+            background-color: #4a4a4a;
+            color: var(--mc-text-yellow);
+            box-shadow: inset 3px 3px 0px #202020;
+        }
+
+        /* Slot Zone */
+        .mc-slot-zone {
+            background: #4a4a4a;
+            border: 4px solid #000;
+            box-shadow: inset 4px 4px 0px #1a1a1a, inset -4px -4px 0px #8b8b8b;
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .file-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            font-size: 10px;
+            color: #a9a9a9;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.5;
+            word-break: break-all;
+            text-shadow: 2px 2px 0px #111;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Knihovna obrázků */
+        .recent-images-pane {
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .recent-title {
+            font-size: 9px;
+            color: #dfdfdf;
+            margin-bottom: 4px;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .recent-gallery {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            background: #313131;
+            border: 3px solid #000;
+            box-shadow: inset 3px 3px 0px #1a1a1a;
+            padding: 6px;
+            min-height: 52px;
+        }
+
+        .recent-thumb {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #000;
+            background: #555;
+            cursor: pointer;
+            box-shadow: inset 2px 2px 0px #888;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        /* Color Picker */
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            height: 100%;
+            padding: 0 10px;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: 3px solid #000;
+            height: 54px;
+            width: 110px;
+            cursor: pointer;
+            background: transparent;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; }
+
+        .color-hex {
+            font-size: 13px;
+            color: var(--mc-text-green);
+            text-shadow: 2px 2px 0px #003300;
+        }
+
+        /* Pravá strana: Náhled */
+        .preview-pane {
+            background-color: #4a4a4a;
+            border: 4px solid #000;
+            box-shadow: inset 4px 4px 0px #1a1a1a, inset -4px -4px 0px #8b8b8b;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .canvas-container {
+            border: 4px solid #000;
+            background: repeating-conic-gradient(#2d2d2d 0% 25%, #3b3b3b 0% 50%) 50% / 20px 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px;
+            overflow: hidden;
+        }
+
+        #main-canvas {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            background-color: #000;
+            transform: translateZ(0); 
+        }
+
+        .info-text-clean {
+            font-size: 11px;
+            color: #bbb;
+            line-height: 1.5;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .info-highlight {
+            color: var(--mc-text-yellow);
+        }
+
+        /* Export Button */
+        .download-btn {
+            font-size: 14px;
+            background-color: #55aa55;
+            border: 4px solid #000;
+            box-shadow: inset -4px -4px 0 #336633, inset 4px 4px 0 #88dd88;
+            color: white;
+            padding: 14px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: var(--mc-shadow);
+        }
+
+        .footer-info {
+            font-size: 10px;
+            color: #888;
+            text-align: center;
+            margin-top: 8px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        @media (max-width: 850px) {
+            body {
+                padding: 4px;
+            }
+
+            .gui-body {
+                grid-template-columns: 1fr;
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .config-pane {
+                order: 1;
+            }
+
+            .preview-pane {
+                order: 2;
+            }
+            
+            .tab {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-container" id="background-element"></div>
+<div class="bg-overlay"></div>
+
+<div class="top-nav-left">
+    <a href="https://zpatkyvpatky.xyz" class="mc-text-btn">← Back</a>
+</div>
+
+<div class="top-nav-right">
+    <a href="ravenreloaded.html" class="mc-text-btn">Raven Reloaded</a>
+    <a href="https://dsc.gg/rvnr" target="_blank" rel="noopener noreferrer" class="mc-text-btn">Discord</a>
+    <a href="https://github.com/RavenReloaded" target="_blank" rel="me noopener noreferrer" class="mc-text-btn">GitHub</a>
+    <a href="https://ko-fi.com/patek_cz" target="_blank" rel="noopener noreferrer" class="mc-text-btn">Support</a>
+</div>
+
+<h1 class="seo-heading">Raven Reloaded Cape Creator - Online Minecraft HD Cape Editor</h1>
+
+<div class="gui-wrapper">
+    <div class="tabs-container">
+        <div class="tab active" id="tab-front" onclick="switchTab('front')">Front</div>
+        <div class="tab" id="tab-back" onclick="switchTab('back')">Back</div>
+        <div class="tab" id="tab-top" onclick="switchTab('top')">Top/Bottom</div>
+        <div class="tab" id="tab-sides" onclick="switchTab('sides')">Edges</div>
+    </div>
+
+    <div class="gui-body">
+        <div class="config-pane">
+            <div>
+                <div class="pane-title" id="pane-title-text">EDITING: FRONT SIDE (BODY)</div>
+                
+                <div class="mc-button-group">
+                    <button class="mc-btn active" id="btn-mode-image" onclick="setPartMode('image')">IMAGE</button>
+                    <button class="mc-btn" id="btn-mode-color" onclick="setPartMode('color')">COLOR</button>
+                </div>
+
+                <div class="mc-slot-zone" id="upload-slot-zone">
+                    <div id="input-image-container" style="width: 100%; height: 100%;">
+                        <label class="file-label" id="file-label" for="universal-file">CLICK TO UPLOAD IMAGE...</label>
+                        <input type="file" id="universal-file" accept="image/*" onchange="handleFileChange()">
+                    </div>
+                    
+                    <div id="input-color-container" class="color-picker-wrapper" style="display: none;">
+                        <input type="color" id="universal-color" value="#1a1a1a" oninput="handleColorLive()" onchange="handleColorFinal()">
+                        <span class="color-hex" id="universal-hex">#1A1A1A</span>
+                    </div>
+                </div>
+
+                <button class="mc-btn" id="btn-remove-image" onclick="removeCurrentImage()" style="margin-top: 8px; width: 100%; background-color: #aa5555; box-shadow: inset -3px -3px 0px #773333, inset 3px 3px 0px #cc7777; display: none;">REMOVE IMAGE</button>
+
+                <div class="recent-images-pane" id="recent-pane">
+                    <div class="recent-title">RECENT IMAGES:</div>
+                    <div class="recent-gallery" id="recent-gallery"></div>
+                </div>
+            </div>
+
+            <div class="info-text-clean">
+                INFO:<br>
+                Save exported file into:<br>
+                <span class="info-highlight">.minecraft/keystrokes/<br>customCapes</span>
+            </div>
+        </div>
+
+        <div class="preview-pane">
+            <div class="canvas-container">
+                <canvas id="main-canvas" width="1024" height="512"></canvas>
+            </div>
+            
+            <div style="width: 100%;">
+                <a id="download-link" class="download-btn">EXPORT_CAPE</a>
+                <div class="footer-info">RAVEN RELOADED • 1024x512 PNG</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('main-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    let currentTab = 'front';
+    const state = {
+        front: { mode: 'image', color: '#1a1a1a', image: null, filename: 'CLICK TO UPLOAD IMAGE...' },
+        back:  { mode: 'image', color: '#7d5fff', image: null, filename: 'CLICK TO UPLOAD IMAGE...' },
+        top:   { mode: 'image', color: '#5a5a5a', image: null, filename: 'CLICK TO UPLOAD IMAGE...' },
+        sides: { mode: 'image', color: '#333333', image: null, filename: 'CLICK TO UPLOAD IMAGE...' }
+    };
+
+    const uploadedImagesHistory = [];
+
+    const tabNames = {
+        front: "EDITING: FRONT SIDE (BODY)",
+        back: "EDITING: BACK SIDE (MAIN)",
+        top: "EDITING: TOP & BOTTOM EDGES",
+        sides: "EDITING: SIDE EDGES"
+    };
+
+    function switchTab(part) {
+        currentTab = part;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(`tab-${part}`).classList.add('active');
+        document.getElementById('pane-title-text').textContent = tabNames[part];
+        syncUI();
+    }
+
+    function syncUI() {
+        const currentData = state[currentTab];
+        
+        document.getElementById('btn-mode-image').classList.toggle('active', currentData.mode === 'image');
+        document.getElementById('btn-mode-color').classList.toggle('active', currentData.mode === 'color');
+        
+        document.getElementById('input-image-container').style.display = currentData.mode === 'image' ? 'block' : 'none';
+        document.getElementById('input-color-container').style.display = currentData.mode === 'color' ? 'flex' : 'none';
+        
+        document.getElementById('recent-pane').style.display = (currentData.mode === 'image' && uploadedImagesHistory.length > 0) ? 'block' : 'none';
+
+        const slotZone = document.getElementById('upload-slot-zone');
+        slotZone.style.cursor = currentData.mode === 'color' ? 'default' : 'pointer';
+
+        document.getElementById('file-label').textContent = currentData.filename;
+        document.getElementById('universal-color').value = currentData.color;
+        document.getElementById('universal-hex').textContent = currentData.color.toUpperCase();
+        
+        const removeBtn = document.getElementById('btn-remove-image');
+        if (removeBtn) {
+            removeBtn.style.display = (currentData.mode === 'image' && currentData.image) ? 'block' : 'none';
+        }
+        
+        updateRecentGalleryUI();
+    }
+
+    function removeCurrentImage() {
+        state[currentTab].image = null;
+        state[currentTab].filename = 'CLICK TO UPLOAD IMAGE...';
+        syncUI();
+        render(true);
+    }
+
+    function setPartMode(mode) {
+        state[currentTab].mode = mode;
+        syncUI();
+        render(true);
+    }
+
+    function handleFileChange() {
+        const input = document.getElementById('universal-file');
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const upperName = file.name.toUpperCase();
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    state[currentTab].image = img;
+                    state[currentTab].filename = upperName;
+                    
+                    if (!uploadedImagesHistory.some(item => item.src === e.target.result)) {
+                        uploadedImagesHistory.push({
+                            imgObj: img,
+                            src: e.target.result,
+                            name: upperName
+                        });
+                    }
+
+                    input.value = "";
+                    syncUI();
+                    render(true);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function selectImageFromHistory(index) {
+        const selected = uploadedImagesHistory[index];
+        if (selected) {
+            state[currentTab].image = selected.imgObj;
+            state[currentTab].filename = selected.name;
+            syncUI();
+            render(true);
+        }
+    }
+
+    function updateRecentGalleryUI() {
+        const galleryContainer = document.getElementById('recent-gallery');
+        galleryContainer.innerHTML = '';
+        
+        uploadedImagesHistory.forEach((item, index) => {
+            const thumb = document.createElement('img');
+            thumb.src = item.src;
+            thumb.className = 'recent-thumb';
+            thumb.title = item.name;
+            thumb.onclick = (e) => {
+                e.stopPropagation();
+                selectImageFromHistory(index);
+            };
+            galleryContainer.appendChild(thumb);
+        });
+    }
+
+    function handleColorLive() {
+        const colorVal = document.getElementById('universal-color').value;
+        state[currentTab].color = colorVal;
+        document.getElementById('universal-hex').textContent = colorVal.toUpperCase();
+        render(false); 
+    }
+
+    function handleColorFinal() {
+        render(true);
+    }
+
+    function render(generateDownloadLink = false) {
+        requestAnimationFrame(() => {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const s = 16; 
+            ctx.imageSmoothingEnabled = false;
+
+            function drawSection(part, x, y, w, h) {
+                const data = state[part];
+                const targetX = x * s;
+                const targetY = y * s;
+                const targetW = w * s;
+                const targetH = s * h;
+
+                if (data.mode === 'color') {
+                    ctx.fillStyle = data.color;
+                    ctx.fillRect(targetX, targetY, targetW, targetH);
+                } else if (data.mode === 'image' && data.image) {
+                    const img = data.image;
+                    const ia = img.width / img.height;
+                    const ta = targetW / targetH;
+                    let sx, sy, sw, sh;
+                    
+                    if (ia > ta) { 
+                        sh = img.height; sw = img.height * ta; sx = (img.width - sw) / 2; sy = 0; 
+                    } else { 
+                        sw = img.width; sh = img.width / ta; sx = 0; sy = (img.height - sh) / 2; 
+                    }
+                    ctx.drawImage(img, sx, sy, sw, sh, targetX, targetY, targetW, targetH);
+                } else {
+                    ctx.fillStyle = '#2e2e2e';
+                    ctx.fillRect(targetX, targetY, targetW, targetH);
+                    ctx.strokeStyle = '#434343';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(targetX + 1, targetY + 1, targetW - 2, targetH - 2);
+                }
+            }
+
+            drawSection('top', 1, 0, 10, 1);    
+            drawSection('top', 11, 0, 10, 1);   
+            drawSection('sides', 0, 1, 1, 16);  
+            drawSection('front', 1, 1, 10, 16); 
+            drawSection('sides', 11, 1, 1, 16); 
+            drawSection('back', 12, 1, 10, 16);  
+
+            if (generateDownloadLink) {
+                const downloadLink = document.getElementById('download-link');
+                downloadLink.href = canvas.toDataURL("image/png");
+                downloadLink.download = "custom_cape.png";
+            }
+        });
+    }
+
+    syncUI();
+    render(true);
+</script>
+
+</body>
+</html>

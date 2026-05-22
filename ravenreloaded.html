@@ -683,6 +683,7 @@
     </div>
     
     <div class="top-nav-right">
+      <a href="RavenCape.html" class="mc-text-btn">Cape Creator</a>
       <a href="https://dsc.gg/rvnr" target="_blank" rel="noopener noreferrer" class="mc-text-btn">Discord</a>
       <a href="https://github.com/RavenReloaded" target="_blank" rel="me noopener noreferrer" class="mc-text-btn">GitHub</a>
       <a href="https://ko-fi.com/patek_cz" target="_blank" rel="noopener noreferrer" class="mc-text-btn">Support</a>
@@ -980,6 +981,50 @@ const splashes = [
           });
           
           container.appendChild(discordItem);
+
+          // Add Cape Creator as the second item
+          const capeItem = document.createElement('div');
+          capeItem.className = 'server-item';
+          capeItem.innerHTML = `
+              <div class="server-icon">
+                <svg viewBox="0 0 16 16" style="image-rendering:pixelated">
+                  <rect x="4" y="2" width="8" height="13" fill="#8B5CF6" />
+                  <rect x="5" y="4" width="6" height="9" fill="#ffffff" opacity="0.3" />
+                  <rect x="4" y="2" width="8" height="1" fill="#6d28d9" />
+                </svg>
+              </div>
+              <div class="server-info">
+                <div class="server-header">
+                  <span class="server-name name-gold">HD Cape Creator</span>
+                  <span class="server-players name-green">Online</span>
+                </div>
+                <p class="server-desc">Create your own custom Minecraft HD capes.</p>
+                <p class="server-subdesc">Export directly to keystrokes/customCapes</p>
+              </div>
+              <div class="server-ping">
+                <div class="ping-bars">
+                  <div class="ping-bar ping-bar-1"></div>
+                  <div class="ping-bar ping-bar-2"></div>
+                  <div class="ping-bar ping-bar-3"></div>
+                  <div class="ping-bar ping-bar-4"></div>
+                  <div class="ping-bar ping-bar-5"></div>
+                </div>
+              </div>
+          `;
+          
+          capeItem.addEventListener('click', () => {
+            playClickSound();
+            document.querySelectorAll('#features-list .server-item').forEach(i => i.classList.remove('selected'));
+            capeItem.classList.add('selected');
+            selectedServerUrl = "RavenCape.html";
+            if (joinBtn) joinBtn.disabled = false;
+          });
+          
+          capeItem.addEventListener('dblclick', () => {
+            window.open("RavenCape.html", '_blank', 'noopener,noreferrer');
+          });
+          
+          container.appendChild(capeItem);
 
           // Fetch Discord Live Stats
           fetch('https://discord.com/api/v10/invites/UH7HQpWrGf?with_counts=true')
