@@ -789,9 +789,9 @@
 
     <script>
       // Sound & Settings
-      let soundSetting = 'ON';
-      let fovSetting = 'Normal';
-      let splashColorSetting = 'Gold';
+      let soundSetting = localStorage.getItem('soundSetting') || 'ON';
+      let fovSetting = localStorage.getItem('fovSetting') || 'Normal';
+      let splashColorSetting = localStorage.getItem('splashColorSetting') || 'Gold';
       let selectedServerUrl = "";
       
       // Splash text database
@@ -1368,12 +1368,10 @@ const splashes = [
 
         const toggleSoundBtn = document.getElementById('btn-toggle-sound');
         if (toggleSoundBtn) {
+          toggleSoundBtn.textContent = `Sounds: ${soundSetting}`;
           toggleSoundBtn.addEventListener('click', () => {
-            if (soundSetting === 'ON') {
-              soundSetting = 'OFF';
-            } else {
-              soundSetting = 'ON';
-            }
+            soundSetting = (soundSetting === 'ON') ? 'OFF' : 'ON';
+            localStorage.setItem('soundSetting', soundSetting);
             toggleSoundBtn.textContent = `Sounds: ${soundSetting}`;
           });
         }
@@ -1382,6 +1380,12 @@ const splashes = [
         const toggleFovBtn = document.getElementById('btn-toggle-fov');
         const bgEl = document.getElementById('background-element');
         if (toggleFovBtn && bgEl) {
+          // Apply initial FOV
+          if (fovSetting === 'Quake Pro') {
+            bgEl.style.animation = 'panBackgroundQuake 30s infinite alternate ease-in-out';
+          }
+          toggleFovBtn.textContent = `FOV: ${fovSetting}`;
+          
           toggleFovBtn.addEventListener('click', () => {
             if (fovSetting === 'Normal') {
               fovSetting = 'Quake Pro';
@@ -1390,6 +1394,7 @@ const splashes = [
               fovSetting = 'Normal';
               bgEl.style.animation = 'panBackgroundNormal 30s infinite alternate ease-in-out';
             }
+            localStorage.setItem('fovSetting', fovSetting);
             toggleFovBtn.textContent = `FOV: ${fovSetting}`;
           });
         }
@@ -1397,24 +1402,33 @@ const splashes = [
         // Option: Splash color setting
         const toggleSplashColorBtn = document.getElementById('btn-toggle-splash-color');
         if (toggleSplashColorBtn && splashEl) {
-          toggleSplashColorBtn.addEventListener('click', () => {
-            if (splashColorSetting === 'Gold') {
-              splashColorSetting = 'Aqua';
+          function applySplashColor(color) {
+            if (color === 'Aqua') {
               splashEl.style.color = '#55ffff';
               splashEl.style.textShadow = '2px 2px 0px #003f3f';
-            } else if (splashColorSetting === 'Aqua') {
-              splashColorSetting = 'Red';
+            } else if (color === 'Red') {
               splashEl.style.color = '#ff5555';
               splashEl.style.textShadow = '2px 2px 0px #3f0000';
-            } else if (splashColorSetting === 'Red') {
-              splashColorSetting = 'Purple';
+            } else if (color === 'Purple') {
               splashEl.style.color = '#ff55ff';
               splashEl.style.textShadow = '2px 2px 0px #3f003f';
             } else {
-              splashColorSetting = 'Gold';
               splashEl.style.color = '#ffff55';
               splashEl.style.textShadow = '2px 2px 0px #3f3f00';
             }
+          }
+          
+          applySplashColor(splashColorSetting);
+          toggleSplashColorBtn.textContent = `Splash: ${splashColorSetting}`;
+          
+          toggleSplashColorBtn.addEventListener('click', () => {
+            if (splashColorSetting === 'Gold') splashColorSetting = 'Aqua';
+            else if (splashColorSetting === 'Aqua') splashColorSetting = 'Red';
+            else if (splashColorSetting === 'Red') splashColorSetting = 'Purple';
+            else splashColorSetting = 'Gold';
+            
+            applySplashColor(splashColorSetting);
+            localStorage.setItem('splashColorSetting', splashColorSetting);
             toggleSplashColorBtn.textContent = `Splash: ${splashColorSetting}`;
           });
         }
