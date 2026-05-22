@@ -683,7 +683,7 @@
     </div>
     
     <div class="top-nav-right">
-      <a href="RavenCape.html" class="mc-text-btn">Cape Creator</a>
+      <a href="ravencape.html" class="mc-text-btn">Cape Creator</a>
       <a href="https://dsc.gg/rvnr" target="_blank" rel="noopener noreferrer" class="mc-text-btn">Discord</a>
       <a href="https://github.com/RavenReloaded" target="_blank" rel="me noopener noreferrer" class="mc-text-btn">GitHub</a>
       <a href="https://ko-fi.com/patek_cz" target="_blank" rel="noopener noreferrer" class="mc-text-btn">Support</a>
@@ -1016,12 +1016,12 @@ const splashes = [
             playClickSound();
             document.querySelectorAll('#features-list .server-item').forEach(i => i.classList.remove('selected'));
             capeItem.classList.add('selected');
-            selectedServerUrl = "RavenCape.html";
+            selectedServerUrl = "ravencape.html";
             if (joinBtn) joinBtn.disabled = false;
           });
           
           capeItem.addEventListener('dblclick', () => {
-            window.open("RavenCape.html", '_blank', 'noopener,noreferrer');
+            window.open("ravencape.html", '_blank', 'noopener,noreferrer');
           });
           
           container.appendChild(capeItem);
