@@ -6,38 +6,304 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 — Page Not Found</title>
     <meta name="robots" content="noindex,follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
       html, body {
+        width: 100%;
         height: 100%;
         margin: 0;
-        background: #000;
+        padding: 0;
+        background-color: #2b2b2b;
         color: #E8E6E3;
         font-family: 'Space Mono', monospace, system-ui;
-        display: grid;
-        place-items: center;
       }
-      .box { 
-        text-align: center; 
-        padding: 40px;
-        background: #111;
+      .page-container {
+        width: 100%;
+        height: 100vh;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: #222222;
+      }
+      .black-area {
+        width: 100%;
+        height: 100%;
+        background-color: #000;
         border-radius: 15px;
-        border: 1px solid #333;
+        box-shadow: 0 0 30px rgba(19, 19, 19, 0.2);
+        position: relative;
+        overflow: hidden;
       }
-      h1 { font-size: 48px; margin-bottom: 10px; color: #ff0000; }
-      p { color: rgba(255, 255, 255, 0.7); }
-      .links { display: flex; gap: 20px; justify-content: center; margin-top: 30px; }
-      a { color: #ff6500; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-      a:hover { color: #fff; }
+      .social-links {
+        position: absolute;
+        display: flex;
+        gap: 20px;
+        pointer-events: auto;
+        z-index: 50;
+        top: 30px;
+        right: 30px;
+      }
+      .social-links a {
+        font-family: 'Space Mono', monospace;
+        font-size: 12px;
+        line-height: normal;
+        font-weight: 400;
+        letter-spacing: 1px;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #E8E6E3;
+        transition: color 0.2s ease, text-shadow 0.3s ease;
+      }
+      .social-links a:hover {
+        color: #ff6500;
+      }
+      .error-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+      }
+      .error-code {
+        font-family: 'Anton', sans-serif;
+        font-size: 200px;
+        color: #ff0000;
+        font-weight: 400;
+        letter-spacing: -2px;
+        text-transform: uppercase;
+        line-height: 0.9;
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+        margin-bottom: 10px;
+      }
+      .error-text {
+        font-family: 'Anton', sans-serif;
+        font-size: 60px;
+        color: #fff;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        line-height: 1;
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+        margin-bottom: 30px;
+      }
+      .error-message {
+        font-family: 'Space Mono', monospace;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.5px;
+        max-width: 400px;
+        margin: 0 auto 40px;
+      }
+      .list-container {
+        position: absolute;
+        left: 40px;
+        bottom: 40px;
+        display: flex;
+        gap: 140px;
+      }
+      .list-column {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .list-item {
+        display: flex;
+        justify-content: space-between;
+        min-width: 120px;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        text-decoration: none;
+      }
+      .list-item:hover {
+        transform: scale(1.03);
+      }
+      .list-item:hover .item-name {
+        color: #ff6500;
+      }
+      .item-name {
+        font-family: 'Space Mono', monospace;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 400;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+      }
+      .item-lore {
+        font-family: 'Space Mono', monospace;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: right;
+        letter-spacing: 0.3px;
+        min-width: 45px;
+        white-space: nowrap;
+      }
+      /* Animace */
+      .fade-in {
+        animation: fadeIn 0.8s ease forwards;
+        opacity: 0;
+      }
+      .slide-in {
+        animation: slideIn 0.6s ease forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* Media queries */
+      @media (max-width: 992px) {
+        .error-code {
+          font-size: 160px;
+        }
+        .error-text {
+          font-size: 50px;
+        }
+        .list-container {
+          left: 30px;
+          bottom: 30px;
+        }
+      }
+      @media (max-width: 768px) {
+        .social-links {
+          display: none;
+        }
+        .error-code {
+          font-size: 120px;
+        }
+        .error-text {
+          font-size: 40px;
+        }
+        .error-message {
+          font-size: 13px;
+        }
+        .list-container {
+          left: 20px;
+          bottom: 20px;
+          gap: 80px;
+        }
+      }
+      @media (max-width: 576px) {
+        .error-container {
+          top: 45%;
+        }
+        .error-code {
+          font-size: 90px;
+        }
+        .error-text {
+          font-size: 30px;
+        }
+        .error-message {
+          font-size: 12px;
+        }
+        .list-container {
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 100px;
+          gap: 30px;
+          background-color: rgba(0, 0, 0, 0.7);
+          padding: 15px 20px;
+          border-radius: 10px;
+        }
+        .list-column {
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .list-item {
+          flex-direction: row;
+          gap: 15px;
+          align-items: center;
+          justify-content: space-between;
+          min-width: 160px;
+        }
+        .item-name {
+          font-size: 13px;
+          letter-spacing: 0.5px;
+        }
+        .item-lore {
+          font-size: 12px;
+          text-align: right;
+          min-width: 55px;
+        }
+      }
+      @media (max-width: 380px) {
+        .error-code {
+          font-size: 70px;
+        }
+        .error-text {
+          font-size: 24px;
+        }
+        .list-container {
+          padding: 12px 15px;
+        }
+        .list-item {
+          min-width: 140px;
+        }
+      }
+      body {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('contextmenu', function (e) {
+          e.preventDefault();
+        });
+        document.addEventListener('selectstart', function (e) {
+          e.preventDefault();
+        });
+        document.addEventListener('copy', function (e) {
+          e.preventDefault();
+        });
+      });
+    </script>
   </head>
   <body>
-    <div class="box">
-      <h1>404</h1>
-      <p>This page has been removed or doesn't exist.</p>
-      <div class="links">
-        <a href="/">Homepage</a>
-        <a href="/ravenreloaded">Raven Client</a>
+    <div class="page-container">
+      <div class="black-area">
+        <div class="social-links fade-in">
+          <a href="https://ko-fi.com/patek_cz" target="_blank" rel="noopener noreferrer">Support</a>
+          <a href="https://modrinth.com/user/patekcz" target="_blank" rel="noopener noreferrer">modrinth</a>
+          <a href="https://github.com/patekcz" target="_blank" rel="me noopener noreferrer">GitHub</a>
+          <a href="https://discord.gg/uzu5wWrWNH" target="_blank" rel="noopener noreferrer">Discord</a>
+        </div>
+        <div class="error-container">
+          <div class="error-code fade-in">404</div>
+          <div class="error-text slide-in">NOT FOUND</div>
+          <p class="error-message slide-in">The page you're looking for doesn't exist.</p>
+        </div>
+        <div class="list-container">
+          <div class="list-column">
+            <a href="/" class="list-item slide-in">
+              <span class="item-name">Homepage</span>
+              <span class="item-lore">Return</span>
+            </a>
+            <a href="/ravenreloaded" class="list-item slide-in">
+              <span class="item-name">Raven Client</span>
+              <span class="item-lore">Ghost Client</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </body>

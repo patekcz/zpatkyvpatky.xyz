@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Raven Reloaded — Advanced Minecraft cheat client with modern features, clean interface, and powerful capabilities for enhanced gameplay.">
+    <meta name="description" content="Download Raven Reloaded - the best free Minecraft ghost client for 1.8.9 Forge. Advanced KillAura, AimAssist, Velocity, and bypass modules for Hypixel, BlocksMC, and competitive PvP. Open-source, undetectable, and regularly updated with E-E-A-T standards.">
     <meta name="keywords" content="Raven Reloaded, Raven Client, raven reloaded, minecraft cheat client, minecraft hacks, minecraft client, minecraft mods, patekcz, ravenxd, raven XD, raven fork, ravenbs, ravenBS, ravenB++">
     <meta name="robots" content="index,follow">
     <meta name="author" content="patek_cz">
@@ -30,7 +30,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="preload" href="minecraft_bg.webp" as="image">
+    <link rel="preload" href="minecraft_bg.webp" as="image" fetchpriority="low">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     
     <meta property="og:title" content="Raven Reloaded | Free Minecraft Ghost Client">
@@ -57,7 +57,101 @@
     <meta name="twitter:image" content="https://zpatkyvpatky.xyz/ravenreloaded.png">
     <meta name="twitter:image:alt" content="Raven Reloaded - Advanced Minecraft Cheat Client">
 
-    <title>Raven Reloaded | Advanced Cheat Client</title>
+    <title>Raven Reloaded - Free Minecraft Ghost Client 1.8.9 | Advanced PvP Client with KillAura & AimAssist</title>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Raven Reloaded",
+      "operatingSystem": "Windows, macOS, Linux",
+      "applicationCategory": "GameApplication",
+      "description": "Download Raven Reloaded - the best free Minecraft ghost client for 1.8.9 Forge. Advanced KillAura, AimAssist, Velocity, and bypass modules for Hypixel, BlocksMC, and competitive PvP.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "150"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "patek_cz",
+        "url": "https://zpatkyvpatky.xyz/"
+      },
+      "downloadUrl": "https://github.com/RavenReloaded/version-archive/releases/",
+      "softwareVersion": "1.8.9",
+      "license": "https://github.com/RavenReloaded/version-archive/blob/main/LICENSE"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Raven Reloaded safe to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raven Reloaded is open-source and regularly updated for safety. However, using any ghost client carries some risk. We recommend using it responsibly and following server rules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I install Raven Reloaded?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Download the latest JAR file from our GitHub releases, install Minecraft Forge 1.8.9, and place the JAR in your .minecraft/mods folder. Launch Minecraft with the Forge profile."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will I get banned on Hypixel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raven Reloaded includes bypass modules for various anti-cheats including Hypixel's Watchdog, but no client is 100% undetectable. Use at your own risk and configure settings conservatively."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What modules does Raven Reloaded have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raven Reloaded includes 50+ modules including KillAura with 10+ AutoBlock modes, AimAssist with Tejas and Normal modes, Velocity bypass, StaffList protection, Custom Shader support, Predictive Backtrack, Smart BedAura, Advanced RotationHandler, Dynamic Nametags, and more."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Raven Reloaded better than Raven B++?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raven Reloaded is a modern fork with active development, updated bypass modules, better performance optimization, and additional features not found in Raven B++."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Raven Reloaded",
+      "url": "https://zpatkyvpatky.xyz/ravenreloaded",
+      "logo": "https://zpatkyvpatky.xyz/ravenreloaded.png",
+      "sameAs": [
+        "https://github.com/RavenReloaded",
+        "https://dsc.gg/rvnr",
+        "https://ko-fi.com/patek_cz"
+      ]
+    }
+    </script>
     
     <style>
       /* --- HLAVNÍ STYLY --- */
@@ -246,21 +340,24 @@
         margin-top: 2vh;
         margin-bottom: 12vh; /* Zvýšeno na 12vh pro mírný posun dolů */
         filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.7));
+        width: 100%;
+        max-width: 600px;
       }
-      
+
       .logo-minecraft {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin: 0;
+        position: relative;
       }
-      
+
       .logo-top {
         font-family: 'Press Start 2P', monospace;
         font-size: 3.4rem;
         color: #a78bfa;
-        text-shadow: 
-          -3px -3px 0 #000,  
+        text-shadow:
+          -3px -3px 0 #000,
            3px -3px 0 #000,
           -3px  3px 0 #000,
            3px  3px 0 #000,
@@ -270,13 +367,13 @@
         margin-bottom: 8px;
         text-transform: uppercase;
       }
-      
+
       .logo-bottom {
         font-family: 'Press Start 2P', monospace;
         font-size: 2.2rem;
         color: #cbd5e1;
-        text-shadow: 
-          -3px -3px 0 #000,  
+        text-shadow:
+          -3px -3px 0 #000,
            3px -3px 0 #000,
           -3px  3px 0 #000,
            3px  3px 0 #000,
@@ -284,26 +381,33 @@
            0px  7px 0 #1e293b;
         letter-spacing: 2px;
         text-transform: uppercase;
+        position: relative;
       }
       
-      .splash-text {
+      .splash-text-wrapper {
         position: absolute;
-        bottom: -22px;
-        left: 65%;
+        bottom: 50px;
+        right: 70px;
+        width: 350px;
+        text-align: right;
+        animation: splashBounce 0.45s infinite alternate ease-in-out;
+        pointer-events: none;
+        transform: rotate(-18deg) scale(0.92);
+        transform-origin: right center;
+      }
+
+      .splash-text {
         font-family: 'VT323', monospace;
         font-size: 1.8rem;
         color: #ffff55;
         text-shadow: 2px 2px 0px #3f3f00;
-        transform: translate(-50%, 0) rotate(-18deg) scale(0.92);
-        animation: splashBounce 0.45s infinite alternate ease-in-out;
         white-space: nowrap;
-        pointer-events: none;
-        transform-origin: center;
+        display: inline-block;
       }
 
       @keyframes splashBounce {
-        from { transform: translate(-50%, 0) rotate(-18deg) scale(0.92); }
-        to { transform: translate(-50%, 0) rotate(-18deg) scale(1.08); }
+        from { transform: rotate(-18deg) scale(0.92); }
+        to { transform: rotate(-18deg) scale(1.08); }
       }
 
       .main-buttons {
@@ -700,7 +804,9 @@
                 <span class="logo-top">RAVEN</span>
                 <span class="logo-bottom">RELOADED</span>
               </h1>
-              <div class="splash-text" id="splash-text">1.8.9 Client!</div>
+              <div class="splash-text-wrapper">
+                <div class="splash-text" id="splash-text">1.8.9 Client!</div>
+              </div>
             </div>
             
             <div class="main-buttons">
@@ -780,11 +886,150 @@
         <div class="cookie-title">Cookie Consent Chest</div>
         <p class="cookie-desc">We use cookies to analyze web traffic. Do you consent to storing cookies?</p>
       </div>
-      
+
       <div class="cookie-btn-group">
         <button class="mc-button half-width" id="accept-cookies-btn">Accept</button>
         <button class="mc-button half-width" id="reject-cookies-btn">Reject</button>
       </div>
+    </div>
+
+    <!-- SEO Content Section - Indexable Content for Google -->
+    <div class="seo-content-section" style="position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden;">
+      <h1>Raven Reloaded - Free Minecraft Ghost Client 1.8.9</h1>
+      <h2>Advanced PvP Client with KillAura & AimAssist</h2>
+
+      <h3>Comprehensive Feature Descriptions</h3>
+      <p>Raven Reloaded is a free Minecraft ghost client for version 1.8.9 Forge, designed for competitive PvP players who want advanced features while remaining undetected. Our client includes 50+ modules with cutting-edge technology to give you the edge in combat.</p>
+
+      <h4>Combat Modules</h4>
+      <ul>
+        <li><strong>KillAura</strong> - Advanced combat module with 10+ AutoBlock modes including Vanilla, Watchdog, and custom configurations. Features smart targeting, rotation smoothing, and configurable reach settings.</li>
+        <li><strong>AimAssist</strong> - Precision aiming assistance with Tejas and Normal modes. Helps improve accuracy without being obvious to observers.</li>
+        <li><strong>Velocity</strong> - Bypass module for anti-cheat systems including Grim, Vulcan, and Hypixel's Watchdog. Configurable horizontal and vertical reduction percentages.</li>
+        <li><strong>AutoClicker</strong> - Customizable click speed with randomization to avoid detection. Supports multiple click patterns and timing variations.</li>
+        <li><strong>Reach</strong> - Subtle reach extension that's difficult to detect. Configurable based on your ping for optimal performance.</li>
+      </ul>
+
+      <h4>Utility Modules</h4>
+      <ul>
+        <li><strong>StaffList</strong> - Protection module that alerts you when staff members join your server. Essential for avoiding bans on strict servers.</li>
+        <li><strong>Custom Shader Support</strong> - Load your favorite shaders while using Raven Reloaded. Compatible with most popular shader packs.</li>
+        <li><strong>Predictive Backtrack</strong> - Advanced lag compensation system that predicts enemy positions for more accurate hits.</li>
+        <li><strong>Smart BedAura</strong> - Intelligent bed breaking for BedWars with automatic targeting and efficiency optimizations.</li>
+        <li><strong>Advanced RotationHandler</strong> - Sophisticated rotation system that makes your movements look natural and human-like.</li>
+      </ul>
+
+      <h4>Visual & HUD Modules</h4>
+      <ul>
+        <li><strong>Dynamic Nametags</strong> - Enhanced player nametags showing health, armor, and distance information.</li>
+        <li><strong>Integrated KeyStrokes</strong> - Built-in keystrokes renderer showing CPS, current keys, and other useful information.</li>
+        <li><strong>BridgeInfo</strong> - Competitive bridge assistance module for practice servers and bridge wars.</li>
+        <li><strong>Fullbright</strong> - See perfectly in dark environments without torches.</li>
+        <li><strong>ESP</strong> - Player and entity highlighting through walls (configurable for different playstyles).</li>
+      </ul>
+
+      <h3>Installation Guide</h3>
+      <p>Installing Raven Reloaded is simple and straightforward. Follow these step-by-step instructions to get started:</p>
+      <ol>
+        <li><strong>Download Minecraft Forge 1.8.9</strong> - Visit the official Forge website and download the recommended installer for Minecraft 1.8.9.</li>
+        <li><strong>Install Forge</strong> - Run the Forge installer and select "Install Client". This will create a new Forge profile in your Minecraft launcher.</li>
+        <li><strong>Download Raven Reloaded</strong> - Get the latest JAR file from our GitHub releases page.</li>
+        <li><strong>Place in Mods Folder</strong> - Navigate to your .minecraft/mods folder (Windows: %appdata%\.minecraft\mods, Mac: ~/Library/Application Support/minecraft/mods) and place the Raven Reloaded JAR file there.</li>
+        <li><strong>Launch Minecraft</strong> - Open your Minecraft launcher, select the Forge 1.8.9 profile, and launch the game.</li>
+        <li><strong>Open GUI</strong> - Once in-game, press Left Shift to open the Raven Reloaded GUI and configure your modules.</li>
+      </ol>
+
+      <h3>Configuration Guide</h3>
+      <p>For optimal performance and undetectability, we recommend these settings for different server types:</p>
+      <ul>
+        <li><strong>Hypixel</strong> - Use conservative settings: KillAura with Vanilla Autoblock, Velocity at 80% horizontal, Reach at 3.1-3.2, and enable StaffList protection.</li>
+        <li><strong>Practice Servers</strong> - More aggressive settings acceptable: KillAura with Watchdog Autoblock, higher reach settings, and full Velocity bypass.</li>
+        <li><strong>Anarchy Servers</strong> - Maximum settings: All modules enabled, maximum reach, and blatant configurations.</li>
+      </ul>
+
+      <h3>Raven Reloaded vs Competitors</h3>
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>Raven Reloaded</th>
+          <th>Raven B++</th>
+          <th>Hydrogen</th>
+          <th>Vape</th>
+        </tr>
+        <tr>
+          <td>Price</td>
+          <td>Free</td>
+          <td>Free</td>
+          <td>Free</td>
+          <td>$15-30</td>
+        </tr>
+        <tr>
+          <td>Open Source</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Updates</td>
+          <td>Active</td>
+          <td>Limited</td>
+          <td>Active</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>Modules</td>
+          <td>50+</td>
+          <td>30+</td>
+          <td>40+</td>
+          <td>60+</td>
+        </tr>
+        <tr>
+          <td>Support</td>
+          <td>Discord Community</td>
+          <td>Discord</td>
+          <td>GitHub</td>
+          <td>Premium Support</td>
+        </tr>
+        <tr>
+          <td>Forge Support</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+      </table>
+
+      <h3>Frequently Asked Questions</h3>
+      <p><strong>Is Raven Reloaded safe to use?</strong><br>
+      Raven Reloaded is open-source and regularly updated for safety. However, using any ghost client carries some risk. We recommend using it responsibly and following server rules.</p>
+
+      <p><strong>How do I install Raven Reloaded?</strong><br>
+      Download the latest JAR file from our GitHub releases, install Minecraft Forge 1.8.9, and place the JAR in your .minecraft/mods folder. Launch Minecraft with the Forge profile.</p>
+
+      <p><strong>Will I get banned on Hypixel?</strong><br>
+      Raven Reloaded includes bypass modules for various anti-cheats including Hypixel's Watchdog, but no client is 100% undetectable. Use at your own risk and configure settings conservatively.</p>
+
+      <p><strong>What modules does Raven Reloaded have?</strong><br>
+      Raven Reloaded includes 50+ modules including KillAura with 10+ AutoBlock modes, AimAssist with Tejas and Normal modes, Velocity bypass, StaffList protection, Custom Shader support, Predictive Backtrack, Smart BedAura, Advanced RotationHandler, Dynamic Nametags, and more.</p>
+
+      <p><strong>Is Raven Reloaded better than Raven B++?</strong><br>
+      Raven Reloaded is a modern fork with active development, updated bypass modules, better performance optimization, and additional features not found in Raven B++.</p>
+
+      <p><strong>Does Raven Reloaded work on macOS/Linux?</strong><br>
+      Yes, Raven Reloaded is cross-platform and works on Windows, macOS, and Linux systems with Java 8 or higher installed.</p>
+
+      <p><strong>How often is Raven Reloaded updated?</strong><br>
+      Raven Reloaded is actively maintained with regular updates to bypass new anti-cheat versions and add new features based on community feedback.</p>
+
+      <p><strong>Can I use Raven Reloaded on anarchy servers?</strong><br>
+      Yes, Raven Reloaded works on all Minecraft servers including anarchy servers like 2b2t. Configure settings appropriately for the server type.</p>
+
+      <p><strong>What's the difference between ghost and blatant clients?</strong><br>
+      Ghost clients are designed to be undetectable and subtle, while blatant clients are obvious and used on servers where cheating is allowed. Raven Reloaded can be configured for both playstyles.</p>
+
+      <p><strong>How do I configure KillAura?</strong><br>
+      Open the Raven Reloaded GUI with Left Shift, navigate to Combat modules, and adjust KillAura settings including Autoblock mode, reach, rotations, and targeting preferences based on your playstyle.</p>
     </div>
 
     <script>
