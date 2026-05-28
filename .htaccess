@@ -1,12 +1,12 @@
 # URL Rewriting pro čisté URL
 RewriteEngine On
 
-# Přesměrování z /ravenreloaded na /ravenreloaded.html
-RewriteRule ^ravenreloaded$ ravenreloaded.html [L]
-RewriteRule ^ravencape$ ravencape.html [L]
-RewriteRule ^rvnr$ ravenreloaded.html [L]
-RewriteRule ^ravenR$ ravenreloaded.html [L]
-RewriteRule ^ravenr$ ravenreloaded.html [L]
+# Přesměrování z /ravenreloaded na /ravenreloaded.html (301)
+RewriteRule ^ravenreloaded$ ravenreloaded.html [L,R=301]
+RewriteRule ^ravencape$ ravencape.html [L,R=301]
+RewriteRule ^rvnr$ ravenreloaded.html [L,R=301]
+RewriteRule ^ravenR$ ravenreloaded.html [L,R=301]
+RewriteRule ^ravenr$ ravenreloaded.html [L,R=301]
 
 # Přesměrování s lomítkem (301)
 RewriteRule ^(ravenreloaded|ravencape|rvnr|ravenR|ravenr)/$ $1 [L,R=301]
