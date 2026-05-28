@@ -1,17 +1,4 @@
 User-agent: *
 Allow: /
 
-# Specific paths for Raven Client
-Allow: /ravenreloaded
-Allow: /ravenreloaded.html
-
-# Technical files
-Disallow: /icons/
-Disallow: /CNAME
-Disallow: /robots.txt
-Disallow: /sitemap.xml
-
-# Crawl-delay for polite crawling
-Crawl-delay: 1
-
 Sitemap: https://zpatkyvpatky.xyz/sitemap.xml
